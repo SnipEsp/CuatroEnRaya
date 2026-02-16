@@ -15,7 +15,7 @@ public record Jugador(String nombre, Ficha colorFichas) {
 
     private static void validarColorFichas(Ficha colorFichas) {
         if (colorFichas == null) {
-            throw new IllegalArgumentException("El color de las fichas no puede ser nulo.");
+            throw new NullPointerException("El color de las fichas no puede ser nulo.");
         }
     }
 
