@@ -15,10 +15,10 @@ public class Casilla {
 
     // Setter que comprueba que la casilla no esté ocupada
     public void setFicha(Ficha ficha) {
-        if (this.ficha == null) {
-            throw new NullPointerException("Ficha no puede ser nulo.");
+        if (ficha == null) {
+            throw new NullPointerException("No se puede poner una ficha nula.");
         }
-        if (this.ficha != null) {
+        if (estaOcupada()) {
             throw new CuatroEnRayaExcepcion("La casilla ya contiene una ficha.");
         }
         this.ficha = ficha;
@@ -30,7 +30,6 @@ public class Casilla {
 
     @Override
     public String toString() {
-        String inicial = (ficha == null) ? " " : ficha.toString().substring(0, 1);
-        return String.format("%s", inicial);
+        return (ficha == null) ? " " : ficha.toString(); // Ficha debería devolver "A" o "V"
     }
 }

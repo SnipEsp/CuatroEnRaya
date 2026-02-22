@@ -41,16 +41,15 @@ public class Tablero {
 
     // - columnaLlena(columna: int): boolean
     private boolean columnaLlena(int columna) {
-        return casillas[FILAS - 1][columna].estaOcupada();
+        return casillas[0][columna].estaOcupada(); // Si el techo tiene ficha, ya no cabe más
     }
 
     // + introducirFicha(columna: int, ficha: Ficha): boolean
-    public boolean introducirFicha(int columna, Ficha ficha) throws CuatroEnRayaExcepcion {
+    public boolean introducirFicha(int columna, Ficha ficha) throws NullPointerException {
         comprobarColumna(columna);
         comprobarFicha(ficha);
-
         if (columnaLlena(columna)) {
-            throw new CuatroEnRayaExcepcion("Columna llena");
+            throw new CuatroEnRayaExcepcion("Columna llena.");
         }
 
         int fila = getPrimeraFilaVacia(columna);
@@ -60,22 +59,22 @@ public class Tablero {
     }
 
     // - comprobarFicha(ficha: Ficha)
-    private void comprobarFicha(Ficha ficha) throws CuatroEnRayaExcepcion {
+    private void comprobarFicha(Ficha ficha) {
         if (ficha == null) {
-            throw new CuatroEnRayaExcepcion("Ficha nula");
+            throw new NullPointerException("La ficha no puede ser nula.");
         }
     }
 
     // - comprobarColumna(columna: int)
-    private void comprobarColumna(int columna) throws CuatroEnRayaExcepcion {
+    private void comprobarColumna(int columna) {
         if (columna < 0 || columna >= COLUMNAS) {
-            throw new CuatroEnRayaExcepcion("Columna no válida");
+            throw new IllegalArgumentException("Columna incorrecta."); // Cambiado mensaje y tipo
         }
     }
 
     // - getPrimeraFilaVacia(columna: int): int
     private int getPrimeraFilaVacia(int columna) {
-        for (int i = 0; i < FILAS; i++) {
+        for (int i = FILAS - 1; i >= 0; i--) { // DEBE SER >= 0
             if (!casillas[i][columna].estaOcupada()) return i;
         }
         return -1;
@@ -169,12 +168,14 @@ public class Tablero {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = FILAS - 1; i >= 0; i--) {
-            for (int j = 0; j < COLUMNAS; j++) {
-                sb.append(casillas[i][j].toString()).append(" ");
+        for (int f = 0; f < FILAS; f++) { // De 0 a 5
+            sb.append("|");
+            for (int c = 0; c < COLUMNAS; c++) {
+                sb.append(casillas[f][c].toString()); // Debe devolver "A", "V" o " "
             }
-            sb.append("\n");
+            sb.append("|\n");
         }
+        sb.append(" -------\n");
         return sb.toString();
     }
 }
