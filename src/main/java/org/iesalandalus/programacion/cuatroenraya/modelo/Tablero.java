@@ -161,7 +161,7 @@ public class Tablero {
 
     // - menor(fila: int, columna: int): int
     private int menor(int fila, int columna) {
-        return (fila < columna) ? fila : columna;
+        return Math.min(fila, columna);
     }
 
     // + toString(): String
@@ -176,6 +176,8 @@ public class Tablero {
             sb.append("|\n");
         }
         sb.append(" -------\n");
+        // Otra manera de poner esto más correcta
+        //String barraHorizontal = "-".repeat(COLUMNAS);
         return sb.toString();
     }
 }

@@ -8,7 +8,10 @@ public record Jugador(String nombre, Ficha colorFichas) {
     }
 
     private static void validarNombre(String nombre) {
-        if (nombre == null || nombre.isBlank()) {
+        if (nombre == null) {
+            throw new NullPointerException("El nombre no puede ser nulo.");
+        }
+        if (nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede estar en blanco.");
         }
     }
